@@ -10,6 +10,17 @@ ocr = ddddocr.DdddOcr(show_ad=False)
 def main(corners, size):
     print("Solving...")
     griddivide = int(size[0])
+    root3 = root #tk.Tk
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    progress = ttk.Progressbar(root3, length=300, mode='determinate')
+    progress.pack()
+
+
+    progress['maximum'] = griddivide * griddivide
+
+
     img = Image.open("./screenshot.png")
     x1, y1, x2, y2 = corners[0]+corners[1]
     cropped = img.crop((x1, y1, x2, y2))
