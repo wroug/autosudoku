@@ -19,7 +19,7 @@ sys.excepthook = handle_exception
 stop_event = threading.Event()
 
 def run():
-    setup.main(combo.get())
+    setup.main(combo.get(), root)
 
 def start():
     print("Start:", combo.get())
@@ -34,6 +34,8 @@ root.resizable(False, False)
 
 frame = tk.Frame(root, padx=20, pady=20)
 frame.pack()
+
+root.overrideredirect(True)
 
 combo = ttk.Combobox(frame, values=["6x6", "9x9", "9x9 Diagonal"], state="readonly", width=10)
 combo.set("6x6")
