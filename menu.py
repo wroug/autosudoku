@@ -37,8 +37,8 @@ frame.pack()
 
 root.overrideredirect(True)
 
-combo = ttk.Combobox(frame, values=["6x6", "9x9", "9x9 Diagonal"], state="readonly", width=10)
-combo.set("6x6")
+combo = ttk.Combobox(frame, values=["9x9"], state="readonly", width=10)
+combo.set("9x9")
 combo.pack(pady=(0, 15))
 
 btn_frame = tk.Frame(frame)
