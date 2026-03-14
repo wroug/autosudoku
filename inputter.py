@@ -8,6 +8,12 @@ import os
 import sys
 import re
 
+# pyautogui.FAILSAFE = False
+
+BG = "#d4d0c8"
+FG = "#000000"
+FONT = ("MS Sans Serif", 8)
+
 def main(solution, root, corners):
     for widget in root.winfo_children():
         widget.destroy()
@@ -52,9 +58,9 @@ def main(solution, root, corners):
         pyautogui.moveTo(x, y, duration=duration)
 
 
-    tk.Label(root, text="Select movement speed", font=("Arial", 12)).pack(pady=(16, 8))
+    tk.Label(root, text="Select movement speed", font=("MS Sans Serif", 10), bg=BG, fg=FG).pack(pady=(16, 8))
 
-    btn_frame = tk.Frame(root)
+    btn_frame = tk.Frame(root, bg=BG)
 
 
     btn_frame.pack(pady=(0, 16), padx=24)
@@ -63,10 +69,11 @@ def main(solution, root, corners):
         for widget in root.winfo_children():
             widget.destroy()
 
+        bar_frame = tk.Frame(root, bg=BG)
+        bar_frame.pack(pady=8, padx=8)
 
-        progress = ttk.Progressbar(root, length=300, mode='determinate')
-
-        progress.pack()
+        progress = ttk.Progressbar(bar_frame, length=300, mode='determinate')
+        progress.pack(side="left")
 
         progress['maximum'] = len(solution) - 1
 
@@ -76,6 +83,8 @@ def main(solution, root, corners):
 
         if speed == "fast":
             for task in solution:
+                root.update_idletasks()
+                root.update()
                 move = parse_code(task)
                 if move is None:
                     continue
@@ -90,6 +99,8 @@ def main(solution, root, corners):
 
         elif speed == "humane":
             for task in solution:
+                root.update_idletasks()
+                root.update()
                 move = parse_code(task)
                 if move is None:
                     continue
@@ -105,6 +116,8 @@ def main(solution, root, corners):
             os.execv(sys.executable, [sys.executable] + sys.argv)
         else:
             for task in solution:
+                root.update_idletasks()
+                root.update()
                 move = parse_code(task)
                 if move is None:
                     continue
@@ -120,8 +133,8 @@ def main(solution, root, corners):
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
 
-    tk.Button(btn_frame, text="Instant", width=12, command=lambda: on_speed_chosen("instant")).pack(side="left", padx=8)
+    ttk.Button(btn_frame, text="Instant", width=12, command=lambda: on_speed_chosen("instant")).pack(side="left", padx=8)
 
-    tk.Button(btn_frame, text="Fast", width=12, command=lambda: on_speed_chosen("fast")).pack(side="left", padx=8)
+    ttk.Button(btn_frame, text="Fast", width=12, command=lambda: on_speed_chosen("fast")).pack(side="left", padx=8)
 
-    tk.Button(btn_frame, text="Humane", width=12, command=lambda: on_speed_chosen("humane")).pack(side="left", padx=8)
+    ttk.Button(btn_frame, text="Humane", width=12, command=lambda: on_speed_chosen("humane")).pack(side="left", padx=8)

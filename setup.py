@@ -1,11 +1,17 @@
 import pyautogui
 import tkinter as tk
+from tkinter import ttk
 import read
+
+BG = "#d4d0c8"
+FG = "#000000"
+FONT = ("MS Sans Serif", 8)
 
 def main(size, root):
     screenshot = pyautogui.screenshot()
     #screenshot.save("screenshot.png")
     root2 = tk.Tk()
+    root2.configure(bg=BG)
 
     for widget in root.winfo_children():
         widget.destroy()
@@ -23,7 +29,7 @@ def main(size, root):
 
     root2.title("Setup")
     root2.focus_force()
-    label = tk.Label(root2, text="Hover over TOP LEFT corner and press ENTER")
+    label = tk.Label(root2, text="Hover over TOP LEFT corner and press ENTER", bg=BG, fg=FG, font=FONT, padx=10, pady=10)
     label.pack()
     root2.attributes('-topmost', True)
 

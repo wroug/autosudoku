@@ -8,6 +8,10 @@ import sys
 import os
 import solver
 
+BG = "#d4d0c8"
+FG = "#000000"
+FONT = ("MS Sans Serif", 8)
+
 ocr = ddddocr.DdddOcr(show_ad=False)
 
 
@@ -28,11 +32,12 @@ def draw_grid(root, grid, scale=1.0):
 
             frame = tk.Frame(root, bg="black", bd=0)
             frame.grid(row=y, column=x, padx=(left, 0), pady=(top, 0))
-            label = tk.Label(frame, text=str(val) if val != " " else "", width=3, height=1, font=("Arial", font_size), relief="flat", borderwidth=0, bg="white", fg="black", highlightbackground="#cccccc", highlightthickness=1)
+            label = tk.Label(frame, text=str(val) if val != " " else "", width=3, height=1, font=("MS Sans Serif", font_size), relief="flat", borderwidth=0, bg="white", fg="black", highlightbackground="#808080", highlightthickness=1)
             label.pack()
 
 def main(corners, size, root, img):
     root.geometry("")
+    root.configure(bg=BG)
     print("Solving...")
     griddivide = int(size[0])
     root3 = root #tk.Tk
@@ -107,17 +112,17 @@ def main(corners, size, root, img):
 
     cols = len(numgrid[0])
 
-    confirm_frame = tk.Frame(root)
+    confirm_frame = tk.Frame(root, bg=BG)
     confirm_frame.grid(row=len(numgrid), column=0, columnspan=cols, pady=10)
-    tk.Label(confirm_frame, text="Is this correct?").pack()
-    btn_row = tk.Frame(confirm_frame)
+    tk.Label(confirm_frame, text="Is this correct?", bg=BG, fg=FG, font=FONT).pack()
+    btn_row = tk.Frame(confirm_frame, bg=BG)
     btn_row.pack()
-    tk.Button(btn_row, text="Yes", command=correct, width=8).pack(side="left", padx=5)
-    tk.Button(btn_row, text="No", command=incorrect, width=8).pack(side="left", padx=5)
+    ttk.Button(btn_row, text="Yes", command=correct, width=8).pack(side="left", padx=5)
+    ttk.Button(btn_row, text="No", command=incorrect, width=8).pack(side="left", padx=5)
 
-    exit_frame = tk.Frame(root)
+    exit_frame = tk.Frame(root, bg=BG)
     exit_frame.grid(row=len(numgrid) + 1, column=0, columnspan=cols, sticky="ew")
-    tk.Button(exit_frame, text="Exit", command=stop).pack(fill="x")
+    ttk.Button(exit_frame, text="Exit", command=stop).pack(fill="x")
 
     root.update()
 
