@@ -77,9 +77,9 @@ def main(corners, size, root, img):
                 buffer = io.BytesIO()
                 tempimg.save(buffer, format="PNG")
                 #tempimg.save(f"./digits/{ydivision}-{xdivision}.png")
-                digit = ocr.classification(buffer.getvalue())        #pytesseract.image_to_string(tempimg, config='--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789').strip()
+                digit = ocr.classification(buffer.getvalue())
                 buffer.seek(0)
-                numgrid[ydivision][xdivision] = int(digit) if digit != "" else " "
+                numgrid[ydivision][xdivision] = int(digit if digit in "0123456789" else 0) if digit != ""  else " "
                 pbar.update(1)
                 progress['value'] += 1
                 root3.update_idletasks()
