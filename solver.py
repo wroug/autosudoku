@@ -54,3 +54,33 @@ def main(corners, size):
 
     print(out.replace(" ", "·"))
 
+    def stop():
+        root.destroy()
+        sys.exit(0)
+
+    def correct():
+        print("yay")
+
+    def incorrect():
+        print("boo")
+
+    draw_grid(root, numgrid)
+
+    cols = len(numgrid[0])
+
+    confirm_frame = tk.Frame(root)
+    confirm_frame.grid(row=len(numgrid), column=0, columnspan=cols, pady=10)
+    tk.Label(confirm_frame, text="Is this correct?").pack()
+    btn_row = tk.Frame(confirm_frame)
+    btn_row.pack()
+    tk.Button(btn_row, text="Yes", command=correct, width=8).pack(side="left", padx=5)
+    tk.Button(btn_row, text="No", command=incorrect, width=8).pack(side="left", padx=5)
+
+    exit_frame = tk.Frame(root)
+    exit_frame.grid(row=len(numgrid) + 1, column=0, columnspan=cols, sticky="ew")
+    tk.Button(exit_frame, text="Exit", command=stop).pack(fill="x")
+
+    root.update()
+
+
+
