@@ -100,7 +100,7 @@ def main(corners, size, root):
         print("yay")
 
     def incorrect():
-        print("boo")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
     draw_grid(root, numgrid)
 
