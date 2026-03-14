@@ -5,6 +5,7 @@ from tqdm import tqdm
 import tkinter as tk
 from tkinter import ttk
 import sys
+import os
 
 
 ocr = ddddocr.DdddOcr(show_ad=False)
