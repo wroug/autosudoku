@@ -1,3 +1,7 @@
 .git
 .venv
 .idea
+digits/
+grid.png
+item.png
+screenshot.png
