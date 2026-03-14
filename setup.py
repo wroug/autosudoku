@@ -1,6 +1,6 @@
 import pyautogui
 import tkinter as tk
-import solver
+import read
 
 def main(size, root):
     screenshot = pyautogui.screenshot()
@@ -40,7 +40,7 @@ def main(size, root):
             label.config(text="Done!")
             root2.after(500, root2.destroy)
             print(corners)
-            solver.main(corners, size, root)
+            read.main(corners, size, root)
 
         root2.bind("<Return>", on_bottomright)
 
