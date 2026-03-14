@@ -7,7 +7,29 @@ from tqdm import tqdm
 
 ocr = ddddocr.DdddOcr(show_ad=False)
 
-def main(corners, size):
+
+def draw_grid(root, grid, scale=1.0):
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    font_size = int(12 * scale)
+    pad = int(5 * scale)
+    size = len(grid)
+    box_w = 3
+    box_h = 2 if size == 6 else 3
+
+    for y, row in enumerate(grid):
+        for x, val in enumerate(row):
+            left = 2 if x % box_w == 0 and x != 0 else 0
+            top  = 2 if y % box_h == 0 and y != 0 else 0
+
+            frame = tk.Frame(root, bg="black", bd=0)
+            frame.grid(row=y, column=x, padx=(left, 0), pady=(top, 0))
+            label = tk.Label(frame, text=str(val) if val != " " else "", width=3, height=1, font=("Arial", font_size), relief="flat", borderwidth=0, bg="white", fg="black", highlightbackground="#cccccc", highlightthickness=1)
+            label.pack()
+
+def main(corners, size, root):
+    root.geometry("")
     print("Solving...")
     griddivide = int(size[0])
     root3 = root #tk.Tk
