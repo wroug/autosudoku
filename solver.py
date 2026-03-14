@@ -80,6 +80,9 @@ def main(corners, size, root):
                 buffer.seek(0)
                 numgrid[ydivision][xdivision] = int(digit) if digit != "" else " "
                 pbar.update(1)
+                progress['value'] += 1
+                root3.update_idletasks()
+                root3.update()
 
     out = ""
     for i in numgrid:
