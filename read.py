@@ -6,7 +6,7 @@ import tkinter as tk
 from tkinter import ttk
 import sys
 import os
-
+import solver
 
 ocr = ddddocr.DdddOcr(show_ad=False)
 
@@ -31,7 +31,7 @@ def draw_grid(root, grid, scale=1.0):
             label = tk.Label(frame, text=str(val) if val != " " else "", width=3, height=1, font=("Arial", font_size), relief="flat", borderwidth=0, bg="white", fg="black", highlightbackground="#cccccc", highlightthickness=1)
             label.pack()
 
-def main(corners, size, root):
+def main(corners, size, root, img):
     root.geometry("")
     print("Solving...")
     griddivide = int(size[0])
@@ -46,11 +46,11 @@ def main(corners, size, root):
     progress['maximum'] = griddivide * griddivide
 
 
-    img = Image.open("./screenshot.png")
+    #img = Image.open("./screenshot.png")
     x1, y1, x2, y2 = corners[0]+corners[1]
     cropped = img.crop((x1, y1, x2, y2))
 
-    cropped.save("./grid.png")
+    #cropped.save("./grid.png")
     print(cropped.size)
     size = cropped.size
     imggrid = [[None]*griddivide for _ in range(griddivide)]
@@ -76,7 +76,7 @@ def main(corners, size, root):
                 ))
                 buffer = io.BytesIO()
                 tempimg.save(buffer, format="PNG")
-                tempimg.save(f"./digits/{ydivision}-{xdivision}.png")
+                #tempimg.save(f"./digits/{ydivision}-{xdivision}.png")
                 digit = ocr.classification(buffer.getvalue())        #pytesseract.image_to_string(tempimg, config='--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789').strip()
                 buffer.seek(0)
                 numgrid[ydivision][xdivision] = int(digit) if digit != "" else " "
@@ -98,7 +98,7 @@ def main(corners, size, root):
         sys.exit(0)
 
     def correct():
-        print("yay")
+        solver.main(numgrid, root, corners)
 
     def incorrect():
         os.execv(sys.executable, [sys.executable] + sys.argv)

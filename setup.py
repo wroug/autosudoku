@@ -4,7 +4,7 @@ import read
 
 def main(size, root):
     screenshot = pyautogui.screenshot()
-    screenshot.save("screenshot.png")
+    #screenshot.save("screenshot.png")
     root2 = tk.Tk()
 
     for widget in root.winfo_children():
@@ -40,7 +40,7 @@ def main(size, root):
             label.config(text="Done!")
             root2.after(500, root2.destroy)
             print(corners)
-            read.main(corners, size, root)
+            read.main(corners, size, root,screenshot)
 
         root2.bind("<Return>", on_bottomright)
 
