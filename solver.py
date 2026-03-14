@@ -2,7 +2,9 @@ from PIL import Image, ImageOps
 import io
 import ddddocr
 from tqdm import tqdm
-
+import tkinter as tk
+from tkinter import ttk
+import sys
 
 
 ocr = ddddocr.DdddOcr(show_ad=False)
