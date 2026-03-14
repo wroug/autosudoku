@@ -1,8 +1,10 @@
 from PIL import Image, ImageOps
 import io
 import ddddocr
+from tqdm import tqdm
 
-buffer = io.BytesIO()
+
+
 ocr = ddddocr.DdddOcr(show_ad=False)
 
 def main(corners, size):
