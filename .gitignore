@@ -8,4 +8,5 @@ screenshot.png
 __pycache__
 dist/
 null.out.txt
+testing.py
 
