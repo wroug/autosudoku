@@ -2,6 +2,7 @@ import subprocess
 import inputter
 import sys
 import os
+import pyautogui
 
 def main(grid, root, corners):
 
@@ -32,3 +33,4 @@ def main(grid, root, corners):
         solution[i] = item.strip()[item.find(":")-1:]
     print(solution)
     inputter.main(solution, root, corners)
+

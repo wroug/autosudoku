@@ -66,71 +66,77 @@ def main(solution, root, corners):
     btn_frame.pack(pady=(0, 16), padx=24)
 
     def on_speed_chosen(speed):
-        for widget in root.winfo_children():
-            widget.destroy()
+        try:
+            for widget in root.winfo_children():
+                widget.destroy()
 
-        bar_frame = tk.Frame(root, bg=BG)
-        bar_frame.pack(pady=8, padx=8)
+            bar_frame = tk.Frame(root, bg=BG)
+            bar_frame.pack(pady=8, padx=8)
 
-        progress = ttk.Progressbar(bar_frame, length=300, mode='determinate')
-        progress.pack(side="left")
+            progress = ttk.Progressbar(bar_frame, length=300, mode='determinate')
+            progress.pack(side="left")
 
-        progress['maximum'] = len(solution) - 1
+            progress['maximum'] = len(solution) - 1
 
-        root.update_idletasks()
+            root.update_idletasks()
 
-        root.update()
+            root.update()
 
-        if speed == "fast":
-            for task in solution:
-                root.update_idletasks()
-                root.update()
-                move = parse_code(task)
-                if move is None:
-                    continue
-                move_to(*calcoords(move), 4000)
-                pyautogui.click()
-                pyautogui.press(str(move[2]))
+            if speed == "fast":
+                for task in solution:
+                    root.update_idletasks()
+                    root.update()
+                    move = parse_code(task)
+                    if move is None:
+                        continue
+                    move_to(*calcoords(move), 4000)
+                    pyautogui.click()
+                    pyautogui.press(str(move[2]))
 
-                progress['value'] += 1
-                root.update_idletasks()
-                root.update()
+                    progress['value'] += 1
+                    root.update_idletasks()
+                    root.update()
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+
+            elif speed == "humane":
+                for task in solution:
+                    root.update_idletasks()
+                    root.update()
+                    move = parse_code(task)
+                    if move is None:
+                        continue
+                    mouse = PyautoguiMouseController()
+                    mouse.dest_position = calcoords(move)
+                    mouse.move_to_target()
+                    pyautogui.click()
+                    pyautogui.press(str(move[2]))
+
+                    progress['value'] += 1
+                    root.update_idletasks()
+                    root.update()
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+            else:
+                for task in solution:
+                    root.update_idletasks()
+                    root.update()
+                    move = parse_code(task)
+                    if move is None:
+                        continue
+                    #mouse = PyautoguiMouseController()
+                    #mouse.dest_position = calcoords(move)
+                    pyautogui.moveTo(*calcoords(move))
+                    pyautogui.click()
+                    pyautogui.press(str(move[2]))
+
+                    progress['value'] += 1
+                    root.update_idletasks()
+                    root.update()
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+        except pyautogui.FailSafeException:
             os.execv(sys.executable, [sys.executable] + sys.argv)
-
-        elif speed == "humane":
-            for task in solution:
-                root.update_idletasks()
-                root.update()
-                move = parse_code(task)
-                if move is None:
-                    continue
-                mouse = PyautoguiMouseController()
-                mouse.dest_position = calcoords(move)
-                mouse.move_to_target()
-                pyautogui.click()
-                pyautogui.press(str(move[2]))
-
-                progress['value'] += 1
-                root.update_idletasks()
-                root.update()
-            os.execv(sys.executable, [sys.executable] + sys.argv)
-        else:
-            for task in solution:
-                root.update_idletasks()
-                root.update()
-                move = parse_code(task)
-                if move is None:
-                    continue
-                #mouse = PyautoguiMouseController()
-                #mouse.dest_position = calcoords(move)
-                pyautogui.moveTo(*calcoords(move))
-                pyautogui.click()
-                pyautogui.press(str(move[2]))
-
-                progress['value'] += 1
-                root.update_idletasks()
-                root.update()
-            os.execv(sys.executable, [sys.executable] + sys.argv)
+        except Exception as e:
+            print(e)
+            pass
 
 
     ttk.Button(btn_frame, text="Instant", width=12, command=lambda: on_speed_chosen("instant")).pack(side="left", padx=8)

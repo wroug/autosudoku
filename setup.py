@@ -43,6 +43,10 @@ def main(size, root):
         def on_bottomright(event):
             pos_bottomright = pyautogui.position()
             corners = (pos_topleft, pos_bottomright)  # ((x1,y1), (x2,y2))
+            if corners[0][0] > corners[1][0] or corners[0][1] > corners[1][1]:
+                label.config(text="Incorrect positioning!")
+                root2.after(500, root2.destroy)
+                main(size, root)
             label.config(text="Done!")
             root2.after(500, root2.destroy)
             print(corners)
