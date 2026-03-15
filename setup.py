@@ -8,7 +8,7 @@ FG = "#000000"
 FONT = ("MS Sans Serif", 8)
 
 def main(size, root):
-    screenshot = pyautogui.screenshot()
+
     #screenshot.save("screenshot.png")
     root2 = tk.Tk()
     root2.configure(bg=BG)
@@ -29,13 +29,13 @@ def main(size, root):
 
     root2.title("Setup")
     root2.focus_force()
-    label = tk.Label(root2, text="Hover over TOP LEFT corner and press ENTER", bg=BG, fg=FG, font=FONT, padx=10, pady=10)
+    label = tk.Label(root2, text="Hover your mouse over the TOP LEFT corner  of the sudoku and press ENTER", bg=BG, fg=FG, font=FONT, padx=10, pady=10)
     label.pack()
     root2.attributes('-topmost', True)
 
     def on_topleft(event):
         pos_topleft = pyautogui.position()
-        label.config(text="Now hover over BOTTOM RIGHT corner and press ENTER")
+        label.config(text="Now hover over your mouse over the BOTTOM RIGHT corner of the sudoku and press ENTER")
         root2.attributes('-topmost', True)
 
         root2.focus_force()
@@ -50,6 +50,7 @@ def main(size, root):
             label.config(text="Done!")
             root2.after(500, root2.destroy)
             print(corners)
+            screenshot = pyautogui.screenshot()
             read.main(corners, size, root,screenshot)
 
         root2.bind("<Return>", on_bottomright)
