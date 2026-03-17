@@ -3,7 +3,15 @@ from tkinter import ttk
 import threading
 import setup
 import sys
+import subprocess
 
+try:
+    result = subprocess.run(["java", "--version"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True)
+except FileNotFoundError:
+    print("Java is not installed. Please install Java at https://www.java.com/en/download/ and try again.")
+    sys.exit(1)
 
 def handle_exception(exc_type, exc_value, exc_traceback):
     if issubclass(exc_type, KeyboardInterrupt):
