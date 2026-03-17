@@ -3,6 +3,7 @@ import inputter
 import sys
 import os
 import pyautogui
+import platform
 
 def main(grid, root, corners):
 
@@ -12,13 +13,22 @@ def main(grid, root, corners):
             stringe += str(item)
     puzzle_string = stringe.replace(" ", ".")
 
-    def get_jar_path():
-        if getattr(sys, "frozen", False) or "__compiled__" in globals():
-            base = os.path.dirname(sys.executable)
-        else:
-            base = os.path.dirname(os.path.abspath(__file__))
-        return os.path.join(base, "hodoku.jar")
+    if platform.system() == "Linux":
+        def get_jar_path():
+            if getattr(sys, "frozen", False) or "__compiled__" in globals():
+                base = os.path.dirname(sys.executable)
+            else:
+                base = os.path.dirname(os.path.abspath(__file__))
+            return os.path.join(base, "hodoku.jar")
+    elif platform.system() == "Windows":
 
+        def get_jar_path():
+            if getattr(sys, "frozen", False):
+                base = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
+            else:
+                base = os.path.dirname(os.path.abspath(__file__))
+
+            return os.path.join(base, "hodoku.jar")
     subprocess.run(
         ["java", "-jar", get_jar_path(), "/vp", puzzle_string]
     )
